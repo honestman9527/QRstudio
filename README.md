@@ -81,12 +81,24 @@ Most QR generators are bloated SaaS tools that paywall basic features, plaster w
 - **QR Safety Analysis** — flags suspicious URLs, warns on open WiFi, crypto addresses, and payment QR codes
 
 ### General
+- **English / 简体中文** — switch languages in the header; follows your browser on first visit and remembers your manual choice
+- **UTF-8 QR Content** — Chinese, mixed-language text, and emoji work in previews and exports
 - **Dark / Light Theme** — with persistent preference
 - **Mobile-First Responsive** — works perfectly on phones, tablets, and desktops
 - **Share API** — native sharing on supported devices
 - **Single HTML File** — the entire app is one file, no build step, no framework, no node_modules
 - **Privacy-First** — everything runs client-side; your data never leaves your browser
 - **Easter Eggs** — 👀 _open the console if you're curious_
+
+---
+
+## Language / 语言
+
+Choose **简体中文** or **English** next to the theme buttons. On first visit, QR Studio selects the first supported language in your browser preferences, falling back to English. All Chinese language variants use Simplified Chinese. A manual choice takes priority and is saved locally when browser storage is available.
+
+Switching languages preserves your inputs, uploaded images, QR settings, camera session, and scan results. It changes the interface labels without translating your encoded data or merchant details.
+
+在页面右上角选择「简体中文」或「English」。首次打开时跟随浏览器语言，手动切换后记住选择。切换语言会保留已填内容、上传图片、二维码设置和扫描结果；中文与表情符号使用 UTF-8 编码。
 
 ---
 
@@ -201,6 +213,20 @@ Contributions are welcome! If you have ideas for new features, find bugs, or wan
 5. Open a Pull Request
 
 Since the entire app is a single HTML file, contributing is as simple as editing one file — no complex project structure to navigate.
+
+### Localization tests (optional)
+
+The Node tests check language selection, switching during active operations, state preservation, and Unicode QR round trips using the same encoder/scanner versions as the app. They use a DOM implementation without launching a browser; visual layout still needs manual review.
+
+Install the test-only dependencies in a temporary directory, then run from the repository root with Node.js 22 or newer:
+
+```bash
+mkdir -p /tmp/qr-studio-tests
+pnpm --dir /tmp/qr-studio-tests add linkedom@0.18.12 qrcode-generator@1.4.4 jsqr@1.4.0
+NODE_PATH=/tmp/qr-studio-tests/node_modules node --test tests/i18n.test.cjs
+```
+
+The app itself needs no installation or build step.
 
 ---
 
